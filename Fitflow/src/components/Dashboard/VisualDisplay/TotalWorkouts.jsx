@@ -2,9 +2,9 @@ import React from "react";
 
 function TotalWorkouts() {
   return (
-    <div className="vd-card">
-      <h3>Total Workouts</h3>
-      <p>34</p>
+    <div className="visual-card">
+      <h3 className="stat-title">Total Workouts</h3>
+      <p className="stat-value">34</p> {/* PlaceHolder */}
     </div>
   );
 }

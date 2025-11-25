@@ -3,10 +3,12 @@ import TotalWorkouts from "./TotalWorkouts";
 import TotalCalories from "./TotalCalories";
 import DaysStreak from "./DaysStreak";
 import WeeklyProgress from "./WeeklyProgress";
+import "./VisualDisplay.css"
 
+{/* Main component for handling the displays */}
 function VisualDisplay() {
   return (
-    <div className="visual-display">
+    <div className="visual-grid">
       <TotalWorkouts />
       <TotalCalories />
       <DaysStreak />

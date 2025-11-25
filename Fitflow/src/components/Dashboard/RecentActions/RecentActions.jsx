@@ -1,4 +1,5 @@
 import React from "react";
+import "./RecentActions.css"
 
 const sampleData = [
   { id: 1, title: "Chest Day", date: "24 Nov", duration: "45 min", kcal: 350 },
@@ -10,10 +11,10 @@ const sampleData = [
 
 function RecentActions() {
   return (
-    <div className="recent-actions">
+    <div className="recent-card">
       <h2>Recent Workouts</h2>
-
-      <table>
+ {/* Tabled data whould be passed here*/ }
+      <table className="recent-table">
         <thead>
           <tr>
             <th>Title</th>
