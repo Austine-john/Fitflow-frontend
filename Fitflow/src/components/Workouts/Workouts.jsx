@@ -1,23 +1,16 @@
 import React from "react";
-import WorkoutHistory from "./WorkoutsHistory/WorkoutsHistory";
-import WorkoutForm from "./WorkoutsForm/WorkoutsForm";
-import ExerciseForm from "./ExerciseForm/ExerciseForm";
+import WorkoutsHistory from "../../components/Workouts/WorkoutsHistory/WorkoutsHistory.jsx";
+import WorkoutsForm from "../../components/Workouts/WorkoutsForm/WorkoutsForm.jsx";
+import ExerciseForm from "../../components/Workouts/ExerciseForm/ExerciseForm.jsx";
+import "../../components/Workouts/Workouts.css";
 
-const Workouts = () => {
+
+export default function Workouts() {
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Workouts</h1>
-
-      {/* Workout History Table */}
-      <WorkoutHistory />
-
-      {/* Workout Creation Form */}
-      <WorkoutForm />
-
-      {/* Exercise Form */}
+    <div className="workouts-wrapper">
+      <WorkoutsHistory />
+      <WorkoutsForm />
       <ExerciseForm />
     </div>
   );
-};
-
-export default Workouts;
+}

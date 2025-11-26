@@ -1,41 +1,44 @@
 import React from "react";
+import "../Workouts.css";
 
-const sampleWorkouts = [
-  { id: 1, name: "Chest Day", date: "2025-01-01", duration: 45, calories_burned: 300 },
-  { id: 2, name: "Leg Day", date: "2025-01-03", duration: 60, calories_burned: 450 },
-  { id: 3, name: "Cardio", date: "2025-01-05", duration: 30, calories_burned: 250 },
-];
 
-const WorkoutHistory = () => {
+export default function WorkoutsHistory() {
   return (
-    <div style={{ marginTop: "30px" }}>
-      <h2>Workout History</h2>
+    <div className="card-section">
+      <h2 className="section-title">Workout History</h2>
 
-      <div style={{ maxHeight: "200px", overflowY: "scroll" }}>
-        <table border="1" width="100%">
+      <div className="table-container">
+        <table className="history-table">
           <thead>
             <tr>
-              <th>Title</th>
               <th>Date</th>
-              <th>Duration (min)</th>
-              <th>Kcal Burned</th>
+              <th>Type</th>
+              <th>Duration</th>
+              <th>Calories</th>
+              <th>Notes</th>
             </tr>
           </thead>
 
           <tbody>
-            {sampleWorkouts.map((w) => (
-              <tr key={w.id}>
-                <td>{w.name}</td>
-                <td>{w.date}</td>
-                <td>{w.duration}</td>
-                <td>{w.calories_burned}</td>
-              </tr>
-            ))}
+            {/* Placeholder rows – replace with fetched data later */}
+            <tr>
+              <td>2025-02-10</td>
+              <td>Strength</td>
+              <td>45 min</td>
+              <td>350</td>
+              <td>Great session</td>
+            </tr>
+
+            <tr>
+              <td>2025-02-09</td>
+              <td>Cardio</td>
+              <td>30 min</td>
+              <td>220</td>
+              <td>-</td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
   );
-};
-
-export default WorkoutHistory;
+}

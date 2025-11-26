@@ -1,41 +1,43 @@
-import React, { useState } from "react";
+import React from "react";
+import "../Workouts.css";
 
-const WorkoutForm = () => {
-  const [form, setForm] = useState({
-    name: "",
-    description: "",
-    date: "",
-    duration: "",
-    calories_burned: "",
-    workout_type: "",
-  });
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Workout Submitted:", form);
-  };
-
+export default function WorkoutsForm() {
   return (
-    <div style={{ marginTop: "30px" }}>
-      <h2>Create Workout</h2>
+    <div className="card-section">
+      <h2 className="section-title">Create New Workout</h2>
 
-      <form onSubmit={handleSubmit}>
-        <input name="name" placeholder="Workout Name" onChange={handleChange} />
-        <input name="description" placeholder="Description" onChange={handleChange} />
-        <input type="date" name="date" onChange={handleChange} />
-        <input type="number" name="duration" placeholder="Duration (min)" onChange={handleChange} />
-        <input type="number" name="calories_burned" placeholder="Calories Burned" onChange={handleChange} />
+      <form className="styled-form">
+        <div className="form-row">
+          <div className="form-group">
+            <label>Workout Name</label>
+            <input type="text" placeholder="Leg Day, Cardio Blast..." />
+          </div>
 
-        <input name="workout_type" placeholder="Workout Type" onChange={handleChange} />
+          <div className="form-group">
+            <label>Workout Type</label>
+            <select>
+              <option>Strength</option>
+              <option>Cardio</option>
+              <option>Flexibility</option>
+            </select>
+          </div>
+        </div>
 
-        <button type="submit">Save Workout</button>
+        <div className="form-row">
+          <div className="form-group">
+            <label>Duration (mins)</label>
+            <input type="number" placeholder="45" />
+          </div>
+
+          <div className="form-group">
+            <label>Date</label>
+            <input type="date" />
+          </div>
+        </div>
+
+        <button className="primary-btn">Create Workout</button>
       </form>
     </div>
   );
-};
-
-export default WorkoutForm;
+}
