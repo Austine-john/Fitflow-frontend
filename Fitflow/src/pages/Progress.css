@@ -1,0 +1,144 @@
+.progress-page {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.progress-form-card {
+    background: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+}
+
+.progress-form-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.progress-form-card h3 {
+    font-size: 1.125rem;
+    margin: 1.5rem 0 1rem;
+    color: var(--text-secondary);
+}
+
+.progress-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.progress-chart-card {
+    background: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+}
+
+.chart-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.metric-selector,
+.chart-type-selector {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--bg-card);
+    padding: 0.25rem;
+    border-radius: var(--radius-md);
+}
+
+.metric-btn,
+.type-btn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.metric-btn:hover,
+.type-btn:hover {
+    color: var(--text-primary);
+}
+
+.metric-btn.active,
+.type-btn.active {
+    background: var(--accent-teal);
+    color: white;
+}
+
+.chart-wrapper {
+    min-height: 400px;
+}
+
+.progress-table-card {
+    background: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow-x: auto;
+}
+
+.progress-table-card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.progress-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.progress-table thead {
+    background: var(--bg-card);
+}
+
+.progress-table th {
+    text-align: left;
+    padding: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.progress-table td {
+    padding: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.progress-table tbody tr {
+    transition: background var(--transition-base);
+}
+
+.progress-table tbody tr:hover {
+    background: var(--bg-card);
+}
+
+@media (max-width: 768px) {
+    .chart-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .metric-selector,
+    .chart-type-selector {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .metric-btn,
+    .type-btn {
+        flex: 1;
+    }
+}
