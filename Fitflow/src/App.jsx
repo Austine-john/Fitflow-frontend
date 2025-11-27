@@ -1,41 +1,48 @@
-import React, { useState } from "react";
-import Dashboard from "./components/Dashboard/Dashboard";
-import Workouts from "./components/Workouts/Workouts";
-import Progress from "./components/Progress/Progress";
-import AuthModal from "./components/AuthModal/AuthModal";
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { useAuth } from './context/AuthContext'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Dashboard from './pages/Dashboard'
+import Workouts from './pages/Workouts'
+import Progress from './pages/Progress'
+import Profile from './pages/Profile'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
-  // State to manage authentication modal visibility and user data
-  const [showAuth, setShowAuth] = useState(false);
-  const [user, setUser] = useState(null);
+    const { user } = useAuth()
 
-  return (
-    <div>
-      <h1>Fitflow App</h1>
+    return (
+        <Routes>
+            <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
+            <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <Register />} />
 
-      {/* Login Button which will have to be moved to the Navbar */}
-      {!user && (
-        <button onClick={() => setShowAuth(true)} style={{ marginBottom: "20px" }}>
-          Login / Register
-        </button>
-      )}
+            <Route path="/dashboard" element={
+                <ProtectedRoute>
+                    <Dashboard />
+                </ProtectedRoute>
+            } />
 
-      {/* Auth Modal */}
-      <AuthModal
-        isOpen={showAuth}
-        onClose={() => setShowAuth(false)}
-        onLogin={(user) => {
-          setUser(user);
-          setShowAuth(false);
-        }}
-      />
+            <Route path="/workouts" element={
+                <ProtectedRoute>
+                    <Workouts />
+                </ProtectedRoute>
+            } />
 
-      {/* App Sections still with no routing */}
-      <Dashboard user={user} />
-      <Workouts user={user} />
-      <Progress user={user} />
-    </div>
-  );
+            <Route path="/progress" element={
+                <ProtectedRoute>
+                    <Progress />
+                </ProtectedRoute>
+            } />
+
+            <Route path="/profile" element={
+                <ProtectedRoute>
+                    <Profile />
+                </ProtectedRoute>
+            } />
+
+            <Route path="/" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
+        </Routes>
+    )
 }
 
-export default App;
+export default App
