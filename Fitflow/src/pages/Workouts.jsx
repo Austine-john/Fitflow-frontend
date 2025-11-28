@@ -268,7 +268,7 @@ const Workouts = () => {
                                             <td>{new Date(workout.date).toLocaleDateString()}</td>
                                             <td>{workout.name}</td>
                                             <td><Clock size={14} className="inline-icon" /> {workout.duration} min</td>
-                                            <td><Flame size={14} className="inline-icon" /> {workout.calories} kcal</td>
+                                            <td><Flame size={14} className="inline-icon" /> {workout.calories_burned} kcal</td>
                                             <td>
                                                 <div className="action-buttons">
                                                     <button className="action-btn edit-btn" title="Edit">

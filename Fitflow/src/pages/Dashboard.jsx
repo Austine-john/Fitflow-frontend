@@ -44,7 +44,7 @@ const Dashboard = () => {
             const hours = Math.floor(totalMinutes / 60)
             const minutes = totalMinutes % 60
 
-            const caloriesBurned = workoutsData.reduce((sum, w) => sum + (w.calories || 0), 0)
+            const caloriesBurned = workoutsData.reduce((sum, w) => sum + (w.calories_burned || 0), 0)
 
             setStats({
                 workoutsThisWeek,
@@ -58,10 +58,10 @@ const Dashboard = () => {
 
             // Prepare chart data
             const chartPoints = progressData
-                .sort((a, b) => new Date(a.date) - new Date(b.date))
+                .sort((a, b) => new Date(a.log_date) - new Date(b.log_date))
                 .slice(-10)
                 .map(p => ({
-                    date: new Date(p.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                    date: new Date(p.log_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
                     weight: p.weight || 0,
                     duration: p.duration || 0,
                     calories: p.calories || 0
@@ -178,7 +178,7 @@ const Dashboard = () => {
                                             </div>
                                             <div className="workout-details">
                                                 <h4>{workout.name}</h4>
-                                                <p>{workout.duration} min • {workout.calories} kcal</p>
+                                                <p>{workout.duration} min • {workout.calories_burned} kcal</p>
                                             </div>
                                             <div className="workout-date">
                                                 {formatDate(workout.date)}
