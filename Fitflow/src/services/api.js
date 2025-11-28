@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5555'
+const API_BASE_URL = 'https://fitflow-backend-a27k.onrender.com'
 
 // Helper function to handle fetch responses
 async function handleResponse(response) {
@@ -32,12 +32,28 @@ export const authAPI = {
     },
 
     login: async (credentials) => {
-        const response = await fetch(`${API_BASE_URL}/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(credentials)
-        })
-        return handleResponse(response)
+        console.log('🔐 Attempting login with:', { username: credentials.username })
+        console.log('📡 API URL:', `${API_BASE_URL}/login`)
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/login`, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(credentials)
+            })
+
+            console.log('📥 Response status:', response.status)
+            console.log('📥 Response headers:', Object.fromEntries(response.headers.entries()))
+
+            return handleResponse(response)
+        } catch (error) {
+            console.error('❌ Login fetch error:', error)
+            throw new Error(`Network error: ${error.message}`)
+        }
     },
 
     getCurrentUser: async () => {
@@ -95,14 +111,14 @@ export const workoutsAPI = {
 // Progress API
 export const progressAPI = {
     getAll: async () => {
-        const response = await fetch(`${API_BASE_URL}/progress`, {
+        const response = await fetch(`${API_BASE_URL}/progress_logs`, {  // FIXED: Changed from /progress
             headers: getAuthHeaders()
         })
         return handleResponse(response)
     },
 
     create: async (progressData) => {
-        const response = await fetch(`${API_BASE_URL}/progress`, {
+        const response = await fetch(`${API_BASE_URL}/progress_logs`, {  // FIXED: Changed from /progress
             method: 'POST',
             headers: getAuthHeaders(),
             body: JSON.stringify(progressData)
@@ -111,7 +127,7 @@ export const progressAPI = {
     },
 
     getStats: async () => {
-        const response = await fetch(`${API_BASE_URL}/progress/stats`, {
+        const response = await fetch(`${API_BASE_URL}/progress_logs/stats`, {  // FIXED: Changed from /progress
             headers: getAuthHeaders()
         })
         return handleResponse(response)
