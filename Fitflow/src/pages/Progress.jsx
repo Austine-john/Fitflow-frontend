@@ -89,13 +89,17 @@ const Progress = () => {
 
     const chartData = progressData
         .sort((a, b) => new Date(a.log_date) - new Date(b.log_date))
-        .map(p => ({
-            date: new Date(p.log_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-            weight: p.weight || 0,
-            bodyFat: p.bodyFat || 0,
-            chest: p.measurements?.chest || 0,
-            waist: p.measurements?.waist || 0
-        }))
+        .map(p => {
+            // Debug log to check incoming data
+            console.log('Processing progress entry:', p)
+            return {
+                date: new Date(p.log_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                weight: p.weight || 0,
+                bodyFat: p.bodyFat || 0,
+                chest: p.chest || 0,      // FIXED: Accessed directly, not via measurements
+                waist: p.waist || 0       // FIXED: Accessed directly
+            }
+        })
 
     const ChartComponent = chartType === 'line' ? LineChart : BarChart
 
@@ -322,8 +326,8 @@ const Progress = () => {
                                             <td>{new Date(entry.log_date).toLocaleDateString()}</td>
                                             <td>{entry.weight || '-'}</td>
                                             <td>{entry.bodyFat || '-'}</td>
-                                            <td>{entry.measurements?.chest || '-'}</td>
-                                            <td>{entry.measurements?.waist || '-'}</td>
+                                            <td>{entry.chest || '-'}</td>
+                                            <td>{entry.waist || '-'}</td>
                                         </tr>
                                     ))}
                                 </tbody>
