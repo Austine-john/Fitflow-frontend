@@ -60,11 +60,11 @@ const Progress = () => {
             const backendData = {
                 log_date: formData.date,  // Renamed: date → log_date
                 weight: formData.weight || null,
+                body_fat: formData.bodyFat || null,  // Now supported by backend
                 chest: formData.measurements.chest || null,
                 waist: formData.measurements.waist || null,
                 hips: formData.measurements.hips || null,
                 biceps: formData.measurements.arms || null,  // Renamed: arms → biceps
-                // Note: bodyFat is not supported by backend, removed
             }
 
             await progressAPI.create(backendData)
@@ -95,9 +95,9 @@ const Progress = () => {
             return {
                 date: new Date(p.log_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
                 weight: p.weight || 0,
-                bodyFat: p.bodyFat || 0,
-                chest: p.chest || 0,      // FIXED: Accessed directly, not via measurements
-                waist: p.waist || 0       // FIXED: Accessed directly
+                bodyFat: p.body_fat || 0,  // FIXED: Use body_fat from backend
+                chest: p.chest || 0,
+                waist: p.waist || 0
             }
         })
 
@@ -325,7 +325,7 @@ const Progress = () => {
                                         <tr key={index}>
                                             <td>{new Date(entry.log_date).toLocaleDateString()}</td>
                                             <td>{entry.weight || '-'}</td>
-                                            <td>{entry.bodyFat || '-'}</td>
+                                            <td>{entry.body_fat || '-'}</td>
                                             <td>{entry.chest || '-'}</td>
                                             <td>{entry.waist || '-'}</td>
                                         </tr>
