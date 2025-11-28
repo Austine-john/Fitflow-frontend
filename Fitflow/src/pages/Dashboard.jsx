@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { Dumbbell, Clock, Flame, Trophy, Activity } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
@@ -10,6 +10,7 @@ import './Dashboard.css'
 const Dashboard = () => {
     const { user } = useAuth()
     const navigate = useNavigate()
+    const location = useLocation()
     const [stats, setStats] = useState({
         workoutsThisWeek: 0,
         totalTime: '0h 0m',
@@ -31,7 +32,7 @@ const Dashboard = () => {
 
         window.addEventListener('focus', handleFocus)
         return () => window.removeEventListener('focus', handleFocus)
-    }, [])
+    }, [location])  // Re-run when location changes (navigating back to dashboard)
 
     const loadDashboardData = async () => {
         try {
@@ -56,7 +57,7 @@ const Dashboard = () => {
 
             setStats({
                 workoutsThisWeek,
-                totalTime: `${hours}h ${minutes}m`,
+                totalTime: `${hours}h ${minutes} m`,
                 caloriesBurned,
                 personalRecords: progressData.filter(p => p.isRecord).length || 1
             })
@@ -204,19 +205,19 @@ const Dashboard = () => {
                                 <h2>Progress Chart</h2>
                                 <div className="chart-tabs">
                                     <button
-                                        className={`tab-btn ${chartMetric === 'weight' ? 'active' : ''}`}
+                                        className={`tab - btn ${chartMetric === 'weight' ? 'active' : ''} `}
                                         onClick={() => setChartMetric('weight')}
                                     >
                                         Weight
                                     </button>
                                     <button
-                                        className={`tab-btn ${chartMetric === 'duration' ? 'active' : ''}`}
+                                        className={`tab - btn ${chartMetric === 'duration' ? 'active' : ''} `}
                                         onClick={() => setChartMetric('duration')}
                                     >
                                         Duration
                                     </button>
                                     <button
-                                        className={`tab-btn ${chartMetric === 'calories' ? 'active' : ''}`}
+                                        className={`tab - btn ${chartMetric === 'calories' ? 'active' : ''} `}
                                         onClick={() => setChartMetric('calories')}
                                     >
                                         Calories
