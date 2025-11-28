@@ -23,6 +23,14 @@ const Dashboard = () => {
 
     useEffect(() => {
         loadDashboardData()
+
+        // Reload data when user returns to this page
+        const handleFocus = () => {
+            loadDashboardData()
+        }
+
+        window.addEventListener('focus', handleFocus)
+        return () => window.removeEventListener('focus', handleFocus)
     }, [])
 
     const loadDashboardData = async () => {
