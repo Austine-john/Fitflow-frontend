@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts'
+import { Plus, LineChart as LineChartIcon, BarChart as BarChartIcon, Scale, Ruler, Activity } from 'lucide-react'
 import { progressAPI } from '../services/api'
 import Navbar from '../components/Navbar'
 import './Progress.css'
@@ -55,7 +56,18 @@ const Progress = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            await progressAPI.create(formData)
+            // FIXED: Transform data to match backend field names
+            const backendData = {
+                log_date: formData.date,  // Renamed: date → log_date
+                weight: formData.weight || null,
+                chest: formData.measurements.chest || null,
+                waist: formData.measurements.waist || null,
+                hips: formData.measurements.hips || null,
+                biceps: formData.measurements.arms || null,  // Renamed: arms → biceps
+                // Note: bodyFat is not supported by backend, removed
+            }
+
+            await progressAPI.create(backendData)
             setShowForm(false)
             setFormData({
                 date: new Date().toISOString().split('T')[0],
@@ -95,7 +107,7 @@ const Progress = () => {
                     <div className="page-header">
                         <h1>Progress Tracking</h1>
                         <button className="btn btn-success" onClick={() => setShowForm(!showForm)}>
-                            {showForm ? 'Cancel' : '+ Add Progress'}
+                            {showForm ? 'Cancel' : <><Plus size={18} /> Add Progress</>}
                         </button>
                     </div>
 
@@ -212,25 +224,25 @@ const Progress = () => {
                                     className={`metric-btn ${metric === 'weight' ? 'active' : ''}`}
                                     onClick={() => setMetric('weight')}
                                 >
-                                    Weight
+                                    <Scale size={16} /> Weight
                                 </button>
                                 <button
                                     className={`metric-btn ${metric === 'bodyFat' ? 'active' : ''}`}
                                     onClick={() => setMetric('bodyFat')}
                                 >
-                                    Body Fat
+                                    <Activity size={16} /> Body Fat
                                 </button>
                                 <button
                                     className={`metric-btn ${metric === 'chest' ? 'active' : ''}`}
                                     onClick={() => setMetric('chest')}
                                 >
-                                    Chest
+                                    <Ruler size={16} /> Chest
                                 </button>
                                 <button
                                     className={`metric-btn ${metric === 'waist' ? 'active' : ''}`}
                                     onClick={() => setMetric('waist')}
                                 >
-                                    Waist
+                                    <Ruler size={16} /> Waist
                                 </button>
                             </div>
                             <div className="chart-type-selector">
@@ -238,13 +250,13 @@ const Progress = () => {
                                     className={`type-btn ${chartType === 'line' ? 'active' : ''}`}
                                     onClick={() => setChartType('line')}
                                 >
-                                    📈 Line
+                                    <LineChartIcon size={16} /> Line
                                 </button>
                                 <button
                                     className={`type-btn ${chartType === 'bar' ? 'active' : ''}`}
                                     onClick={() => setChartType('bar')}
                                 >
-                                    📊 Bar
+                                    <BarChartIcon size={16} /> Bar
                                 </button>
                             </div>
                         </div>

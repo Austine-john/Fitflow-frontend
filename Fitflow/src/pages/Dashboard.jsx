@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { Dumbbell, Clock, Flame, Trophy, Activity } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { workoutsAPI, progressAPI } from '../services/api'
 import Navbar from '../components/Navbar'
@@ -123,20 +124,40 @@ const Dashboard = () => {
 
                     <div className="stats-grid">
                         <div className="stat-card">
-                            <h3>Workouts This Week</h3>
-                            <p className="stat-value">{stats.workoutsThisWeek}</p>
+                            <div className="stat-icon-wrapper">
+                                <Dumbbell size={24} color="#4a90e2" />
+                            </div>
+                            <div>
+                                <h3>Workouts This Week</h3>
+                                <p className="stat-value">{stats.workoutsThisWeek}</p>
+                            </div>
                         </div>
                         <div className="stat-card">
-                            <h3>Total Time</h3>
-                            <p className="stat-value">{stats.totalTime}</p>
+                            <div className="stat-icon-wrapper">
+                                <Clock size={24} color="#f5a623" />
+                            </div>
+                            <div>
+                                <h3>Total Time</h3>
+                                <p className="stat-value">{stats.totalTime}</p>
+                            </div>
                         </div>
                         <div className="stat-card">
-                            <h3>Calories Burned</h3>
-                            <p className="stat-value">{stats.caloriesBurned.toLocaleString()}</p>
+                            <div className="stat-icon-wrapper">
+                                <Flame size={24} color="#e05435" />
+                            </div>
+                            <div>
+                                <h3>Calories Burned</h3>
+                                <p className="stat-value">{stats.caloriesBurned.toLocaleString()}</p>
+                            </div>
                         </div>
                         <div className="stat-card highlight">
-                            <h3>Personal Records</h3>
-                            <p className="stat-value stat-highlight">{stats.personalRecords} New PR</p>
+                            <div className="stat-icon-wrapper">
+                                <Trophy size={24} color="#f8e71c" />
+                            </div>
+                            <div>
+                                <h3>Personal Records</h3>
+                                <p className="stat-value stat-highlight">{stats.personalRecords} New PR</p>
+                            </div>
                         </div>
                     </div>
 
@@ -152,7 +173,9 @@ const Dashboard = () => {
                                 {recentWorkouts.length > 0 ? (
                                     recentWorkouts.map((workout, index) => (
                                         <div key={workout.id || index} className="workout-item">
-                                            <div className="workout-icon">🏋️</div>
+                                            <div className="workout-icon">
+                                                <Activity size={20} />
+                                            </div>
                                             <div className="workout-details">
                                                 <h4>{workout.name}</h4>
                                                 <p>{workout.duration} min • {workout.calories} kcal</p>

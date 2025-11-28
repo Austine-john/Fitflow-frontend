@@ -1,18 +1,19 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import './Auth.css'
+import { Activity, Eye, EyeOff, Lock, User } from 'lucide-react'
+import './Login.css'
 
 const Login = () => {
-    const navigate = useNavigate()
-    const { login } = useAuth()
     const [formData, setFormData] = useState({
-        usernameOrEmail: '',
+        username: '',
         password: ''
     })
     const [showPassword, setShowPassword] = useState(false)
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const { login } = useAuth()
+    const navigate = useNavigate()
 
     const handleChange = (e) => {
         setFormData({
@@ -27,13 +28,17 @@ const Login = () => {
         setLoading(true)
 
         try {
-            await login({
-                username: formData.usernameOrEmail,
+            const result = await login({
+                username: formData.username,
                 password: formData.password
             })
-            navigate('/dashboard')
+            if (result.success) {
+                navigate('/dashboard')
+            } else {
+                setError(result.error)
+            }
         } catch (err) {
-            setError(err.message || 'Login failed')
+            setError('Failed to login. Please try again.')
         } finally {
             setLoading(false)
         }
@@ -43,32 +48,36 @@ const Login = () => {
         <div className="auth-container">
             <div className="auth-card">
                 <div className="auth-header">
-                    <h1 className="auth-title">
-                        <span className="auth-icon">🏋️</span> FitFlow
-                    </h1>
-                    <h2 className="auth-welcome">Welcome Back</h2>
-                    <p className="auth-subtitle">Log in to your account to continue</p>
+                    <div className="auth-logo">
+                        <span className="auth-icon"><Activity size={32} color="#4a90e2" /></span> FitFlow
+                    </div>
+                    <h2>Welcome Back</h2>
+                    <p>Enter your credentials to access your account</p>
                 </div>
 
-                {error && <div className="error-message">{error}</div>}
+                {error && <div className="auth-error">{error}</div>}
 
                 <form onSubmit={handleSubmit} className="auth-form">
                     <div className="form-group">
-                        <label htmlFor="usernameOrEmail">Username or Email</label>
-                        <input
-                            type="text"
-                            id="usernameOrEmail"
-                            name="usernameOrEmail"
-                            placeholder="Enter your username or email"
-                            value={formData.usernameOrEmail}
-                            onChange={handleChange}
-                            required
-                        />
+                        <label htmlFor="username">Username</label>
+                        <div className="input-wrapper">
+                            <span className="input-icon"><User size={18} /></span>
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                placeholder="Enter your username"
+                                value={formData.username}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <div className="password-wrapper">
+                        <div className="input-wrapper">
+                            <span className="input-icon"><Lock size={18} /></span>
                             <input
                                 type={showPassword ? 'text' : 'password'}
                                 id="password"
@@ -83,22 +92,19 @@ const Login = () => {
                                 className="password-toggle"
                                 onClick={() => setShowPassword(!showPassword)}
                             >
-                                {showPassword ? '🙈' : '👁️'}
+                                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                             </button>
                         </div>
-                        <Link to="/forgot-password" className="forgot-password">
-                            Forgot Password?
-                        </Link>
                     </div>
 
-                    <button type="submit" className="btn btn-login" disabled={loading}>
-                        {loading ? 'Logging in...' : 'Login'}
+                    <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
+                        {loading ? 'Logging in...' : 'Log In'}
                     </button>
                 </form>
 
-                <p className="auth-footer">
-                    Don't have an account? <Link to="/register">Sign Up</Link>
-                </p>
+                <div className="auth-footer">
+                    <p>Don't have an account? <Link to="/register">Sign Up</Link></p>
+                </div>
             </div>
         </div>
     )

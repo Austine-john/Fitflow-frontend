@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { workoutsAPI } from '../services/api'
+import { Plus, Clock, Flame, Trash2, Edit2, X } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import './Workouts.css'
 
@@ -58,7 +59,16 @@ const Workouts = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            await workoutsAPI.create(formData)
+            // FIXED: Transform data to match backend field names
+            const backendData = {
+                name: formData.name,
+                date: formData.date,
+                duration: formData.duration,
+                calories_burned: formData.calories,  // Renamed: calories → calories_burned
+                // Note: exercises are handled separately via workout_exercises endpoint
+            }
+
+            await workoutsAPI.create(backendData)
             setShowForm(false)
             setFormData({
                 name: '',
@@ -94,7 +104,7 @@ const Workouts = () => {
                     <div className="page-header">
                         <h1>Workout History</h1>
                         <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
-                            {showForm ? 'Cancel' : 'Create New Workout'}
+                            {showForm ? 'Cancel' : <><Plus size={18} /> Create New Workout</>}
                         </button>
                     </div>
 
@@ -160,7 +170,7 @@ const Workouts = () => {
                                     <div className="exercises-header">
                                         <h3>Exercises</h3>
                                         <button type="button" className="btn btn-success btn-sm" onClick={addExercise}>
-                                            + Add Exercise
+                                            <Plus size={14} /> Add Exercise
                                         </button>
                                     </div>
 
@@ -219,7 +229,7 @@ const Workouts = () => {
                                                     onClick={() => removeExercise(index)}
                                                     title="Remove exercise"
                                                 >
-                                                    ✕
+                                                    <X size={16} />
                                                 </button>
                                             )}
                                         </div>
@@ -257,19 +267,19 @@ const Workouts = () => {
                                         <tr key={workout.id}>
                                             <td>{new Date(workout.date).toLocaleDateString()}</td>
                                             <td>{workout.name}</td>
-                                            <td>{workout.duration} min</td>
-                                            <td>{workout.calories} kcal</td>
+                                            <td><Clock size={14} className="inline-icon" /> {workout.duration} min</td>
+                                            <td><Flame size={14} className="inline-icon" /> {workout.calories} kcal</td>
                                             <td>
                                                 <div className="action-buttons">
                                                     <button className="action-btn edit-btn" title="Edit">
-                                                        ✏️
+                                                        <Edit2 size={16} />
                                                     </button>
                                                     <button
                                                         className="action-btn delete-btn"
                                                         onClick={() => handleDelete(workout.id)}
                                                         title="Delete"
                                                     >
-                                                        🗑️
+                                                        <Trash2 size={16} />
                                                     </button>
                                                 </div>
                                             </td>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { User, Mail, Calendar, LogOut, Trash2, Edit2, Activity, Target, Flame } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import './Profile.css'
 
@@ -50,21 +51,21 @@ const Profile = () => {
 
                             <div className="profile-stats">
                                 <div className="profile-stat">
-                                    <span className="stat-icon">🏋️</span>
+                                    <span className="stat-icon"><Activity size={24} color="#4a90e2" /></span>
                                     <div>
                                         <p className="stat-label">Level</p>
                                         <p className="stat-value">15 Athlete</p>
                                     </div>
                                 </div>
                                 <div className="profile-stat">
-                                    <span className="stat-icon">🔥</span>
+                                    <span className="stat-icon"><Flame size={24} color="#e05435" /></span>
                                     <div>
                                         <p className="stat-label">Streak</p>
                                         <p className="stat-value">16 days</p>
                                     </div>
                                 </div>
                                 <div className="profile-stat">
-                                    <span className="stat-icon">🎯</span>
+                                    <span className="stat-icon"><Target size={24} color="#f8e71c" /></span>
                                     <div>
                                         <p className="stat-label">Goal</p>
                                         <p className="stat-value">{profileData.fitnessGoal}</p>
@@ -78,7 +79,7 @@ const Profile = () => {
                                 <h2>Personal Information</h2>
                                 {!editing && (
                                     <button className="btn btn-secondary btn-sm" onClick={() => setEditing(true)}>
-                                        ✏️ Edit
+                                        <Edit2 size={16} /> Edit
                                     </button>
                                 )}
                             </div>
@@ -191,7 +192,7 @@ const Profile = () => {
                                 <p>Sign out of your account</p>
                             </div>
                             <button className="btn btn-secondary" onClick={logout}>
-                                Log Out
+                                <LogOut size={18} /> Log Out
                             </button>
                         </div>
                         <div className="danger-actions">
@@ -200,7 +201,7 @@ const Profile = () => {
                                 <p>Permanently delete your account and all data</p>
                             </div>
                             <button className="btn-danger">
-                                Delete Account
+                                <Trash2 size={18} /> Delete Account
                             </button>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { LayoutDashboard, Dumbbell, TrendingUp, User, LogOut, Activity } from 'lucide-react'
 import './Navbar.css'
 
 const Navbar = () => {
@@ -7,17 +8,17 @@ const Navbar = () => {
     const location = useLocation()
 
     const navItems = [
-        { path: '/dashboard', icon: '📊', label: 'Dashboard' },
-        { path: '/workouts', icon: '🏋️', label: 'Workouts' },
-        { path: '/progress', icon: '📈', label: 'Progress' },
-        { path: '/profile', icon: '👤', label: 'Profile' }
+        { path: '/dashboard', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
+        { path: '/workouts', icon: <Dumbbell size={20} />, label: 'Workouts' },
+        { path: '/progress', icon: <TrendingUp size={20} />, label: 'Progress' },
+        { path: '/profile', icon: <User size={20} />, label: 'Profile' }
     ]
 
     return (
         <nav className="navbar">
             <div className="navbar-header">
                 <div className="navbar-brand">
-                    <span className="brand-icon">🏋️</span>
+                    <span className="brand-icon"><Activity size={28} /></span>
                     <div className="brand-text">
                         <h2>FitFlow</h2>
                         <p>Fitness Tracker</p>
@@ -54,7 +55,7 @@ const Navbar = () => {
 
             <div className="navbar-footer">
                 <button className="nav-link logout-btn" onClick={logout}>
-                    <span className="nav-icon">🚪</span>
+                    <span className="nav-icon"><LogOut size={20} /></span>
                     <span className="nav-label">Log Out</span>
                 </button>
             </div>
