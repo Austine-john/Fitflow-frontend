@@ -88,9 +88,9 @@ const Progress = () => {
     }
 
     const chartData = progressData
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .sort((a, b) => new Date(a.log_date) - new Date(b.log_date))
         .map(p => ({
-            date: new Date(p.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+            date: new Date(p.log_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
             weight: p.weight || 0,
             bodyFat: p.bodyFat || 0,
             chest: p.measurements?.chest || 0,
@@ -319,7 +319,7 @@ const Progress = () => {
                                 <tbody>
                                     {progressData.map((entry, index) => (
                                         <tr key={index}>
-                                            <td>{new Date(entry.date).toLocaleDateString()}</td>
+                                            <td>{new Date(entry.log_date).toLocaleDateString()}</td>
                                             <td>{entry.weight || '-'}</td>
                                             <td>{entry.bodyFat || '-'}</td>
                                             <td>{entry.measurements?.chest || '-'}</td>
