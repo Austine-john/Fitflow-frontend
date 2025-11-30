@@ -7,6 +7,7 @@ import './Workouts.css'
 const Workouts = () => {
     const [workouts, setWorkouts] = useState([])
     const [showForm, setShowForm] = useState(false)
+    const [editingId, setEditingId] = useState(null)
     const [loading, setLoading] = useState(true)
     const [formData, setFormData] = useState({
         name: '',
@@ -56,6 +57,18 @@ const Workouts = () => {
         setFormData({ ...formData, exercises: newExercises })
     }
 
+    const handleEdit = (workout) => {
+        setEditingId(workout.id)
+        setFormData({
+            name: workout.name,
+            date: workout.date,
+            duration: workout.duration,
+            calories: workout.calories_burned || '',
+            exercises: [{ name: 'Bench Press', sets: 3, reps: 8, weight: 80 }]
+        })
+        setShowForm(true)
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
@@ -68,8 +81,16 @@ const Workouts = () => {
                 // Note: exercises are handled separately via workout_exercises endpoint
             }
 
-            await workoutsAPI.create(backendData)
+            if (editingId) {
+                // Update existing workout
+                await workoutsAPI.update(editingId, backendData)
+            } else {
+                // Create new workout
+                await workoutsAPI.create(backendData)
+            }
+
             setShowForm(false)
+            setEditingId(null)
             setFormData({
                 name: '',
                 date: new Date().toISOString().split('T')[0],
@@ -79,8 +100,8 @@ const Workouts = () => {
             })
             loadWorkouts()
         } catch (error) {
-            console.error('Failed to create workout:', error)
-            alert('Failed to create workout: ' + error.message)
+            console.error('Failed to save workout:', error)
+            alert('Failed to save workout: ' + error.message)
         }
     }
 
@@ -110,7 +131,7 @@ const Workouts = () => {
 
                     {showForm && (
                         <div className="workout-form-card">
-                            <h2>Log a New Workout</h2>
+                            <h2>{editingId ? 'Edit Workout' : 'Log a New Workout'}</h2>
                             <form onSubmit={handleSubmit} className="workout-form">
                                 <div className="form-row">
                                     <div className="form-group">
@@ -241,7 +262,7 @@ const Workouts = () => {
                                         Cancel
                                     </button>
                                     <button type="submit" className="btn btn-primary">
-                                        Save Workout
+                                        {editingId ? 'Update Workout' : 'Save Workout'}
                                     </button>
                                 </div>
                             </form>
@@ -271,7 +292,11 @@ const Workouts = () => {
                                             <td><Flame size={14} className="inline-icon" /> {workout.calories_burned} kcal</td>
                                             <td>
                                                 <div className="action-buttons">
-                                                    <button className="action-btn edit-btn" title="Edit">
+                                                    <button
+                                                        className="action-btn edit-btn"
+                                                        onClick={() => handleEdit(workout)}
+                                                        title="Edit"
+                                                    >
                                                         <Edit2 size={16} />
                                                     </button>
                                                     <button
